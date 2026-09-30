@@ -1,0 +1,298 @@
+﻿SOURCE IMPLEMENTATION SPECIFICATION
+PocketSmart AI
+
+SOURCE BASIS AND LIMITATION
+The workspace item named “ORIGINAL PROJECT DOCUMENT.pdf” is a directory, not a PDF. It contains “PocketSmart AI_ Your Smart Budget & Recommendation Assistant (1).docx”. This specification treats that DOCX as the primary document, as the only available original project document. SOURCE_ANALYSIS.txt, SOURCE_DECISION_REQUIRED.txt, and IMPLEMENTATION_DECISION_MAP.txt are supporting analysis, not primary evidence. Where they state details absent from the DOCX, those details are identified as unsupported by the primary document. The DOCX contains 53 inline images; image contents were not treated as readable source code here. The visible textual snippet is recorded under section 24.
+
+Classification labels used throughout:
+A. EXPLICITLY SPECIFIED
+B. EXPLICIT CODE / STRUCTURE
+C. CONFLICTING IN SOURCE
+D. NOT SPECIFIED
+
+1. PROJECT IDENTITY
+A. EXPLICITLY SPECIFIED
+Project title: “PocketSmart AI: Your Smart Budget & Recommendation Assistant.”
+The document presents a personalized, budget-based recommendation system for home interiors, party planning, and jewelry selection.
+
+2. PROBLEM STATEMENT
+A. EXPLICITLY SPECIFIED
+“Managing budgets across different life needs—like home decor, event planning, or jewelry shopping—can be overwhelming due to the wide variety of products, platforms, and price ranges.”
+
+3. SOLUTION
+A. EXPLICITLY SPECIFIED
+A GenAI-powered, cross-platform recommendation system that uses Gemini 1.5 Flash Pro to analyze user preferences, budgets, and contextual needs, and generate curated suggestions. The document names Amazon, Flipkart, IKEA, Swiggy, Zomato, OYO, and more. It describes smart planners, adaptive forms, and a recommendation engine.
+
+4. CORE FEATURES
+A. EXPLICITLY SPECIFIED
+- Home interior planning with budget, room type, and item quantities; recommendations balanced across functionality, style, and price.
+- Party planning with total budget, guest count, event type, and venue details; proportional allocation across catering, decoration, and entertainment.
+- Jewelry planning with budget, occasion, style preferences, and optional outfit image for color coordination and aesthetics.
+- User registration, login, dashboard, saved queries, recommendation history, testimonials, session management, and AI recommendations are described in the later workflow/UI material.
+B. EXPLICIT CODE / STRUCTURE
+- Milestones describe Flask routes, planner endpoints, modular directories, HTML forms, JavaScript result formatting, CORS, and basic session management.
+C. CONFLICTING IN SOURCE
+- The document describes Flask in its architecture and early workflow, but later describes FastAPI initialization, a FastAPI integration milestone, and FastAPI as the integrated backend.
+- The conclusion names both FastAPI and Flask in separate claims about the backend.
+
+5. ALL 12 HTML PAGES
+A. EXPLICITLY SPECIFIED
+The UI section describes these 12 pages by page purpose/name. Exact HTML filenames are NOT SPECIFIED, except that the textual example explicitly names jewelry_planner.html.
+1. Home Page — landing page, features, planner links, and user actions.
+2. Testimonials Page — real user reviews and success stories.
+3. Register Page — create an account.
+4. Login Page — authenticate existing users.
+5. User Dashboard — recent recommendations, saved queries, personalized insights.
+6. Home Interior Budget Planner Page — home preferences and budget inputs.
+7. Home Interior Recommendations Page — home product suggestions.
+8. Party Budget Planner Page — event, budget, guest inputs.
+9. Party Budget Recommendations Page — party food, venue, and decoration options.
+10. Jewelry Budget Planner Page — occasion/style and optional image inputs.
+11. Jewelry Budget Recommendations Page — personalized jewelry options.
+12. Recommendation History Page — prior queries and results for review/reuse.
+D. NOT SPECIFIED
+The names home.html, register.html, login.html, dashboard.html, home_planner.html, home_recommendations.html, party_planner.html, party_recommendations.html, jewelry_recommendations.html, history.html, and testimonials.html occur in supporting analysis, but are not established as filenames in the primary DOCX. Do not treat them as confirmed filenames. The DOCX does explicitly show jewelry_planner.html in a code snippet.
+
+6. EXACT API ROUTES
+B. EXPLICIT CODE / STRUCTURE
+The DOCX explicitly names these paths. HTTP methods are not stated in the DOCX unless noted.
+- /generate-home — described as a Flask route; accepts home preferences/budget in milestone description. Method NOT SPECIFIED.
+- /generate-party — described as a Flask route; processes party details in milestone description. Method NOT SPECIFIED.
+- /generate-jewelry — described as a Flask route; uses text and optional image inputs in milestone description. Method NOT SPECIFIED.
+- /login — authenticates credentials and initiates a session; method NOT SPECIFIED.
+- /register — creates user registration; method NOT SPECIFIED.
+- /logout — terminates session and redirects to login; method NOT SPECIFIED.
+- /token — secure JWT token after successful authentication; included in the later FastAPI-auth list. Method NOT SPECIFIED.
+- /session-info — session metadata; included in later FastAPI-auth/session list. Method NOT SPECIFIED.
+- /session-data — session-specific data; included in later FastAPI-auth/session list. Method NOT SPECIFIED.
+- /recommendations-details — detailed AI-generated recommendations; included in the FastAPI integration milestone. Method NOT SPECIFIED.
+- /history — past recommendation queries/results; included under “CORS & Static Routing.” Method NOT SPECIFIED.
+- /startup — initializes services/configuration when FastAPI server starts. This is described as startup behavior/path; HTTP method and whether it is a web route are NOT SPECIFIED.
+- __main__ — described as FastAPI entry point starting uvicorn when directly run; this is not an API route.
+C. CONFLICTING IN SOURCE
+The later FastAPI routes/auth/session list conflicts with the earlier Flask route structure; the listed paths themselves are retained without selecting a backend framework.
+D. NOT SPECIFIED
+The exact route list requested in SOURCE_ANALYSIS.txt includes POST/GET methods. Those methods are not documented in the primary DOCX and must not be inferred. The DOCX does not name HTTP methods for these routes.
+
+7. TECHNOLOGY STACK
+A. EXPLICITLY SPECIFIED
+- Flask is named as the backend service layer in Architecture Overview and early workflow.
+- Gemini 1.5 Flash Pro; Google Cloud access/API setup; HTML/CSS + JavaScript frontend.
+- Later UI milestone names HTML, CSS, and Jinja2 templates.
+- Later backend milestone names FastAPI and uvicorn.
+- CORS and basic session management are mentioned.
+C. CONFLICTING IN SOURCE
+- Flask vs FastAPI: Flask appears in Architecture Overview and Activities 2.1/3; FastAPI appears in prerequisites, Milestone 2 activity wording, Milestone 3, later UI integration text, and conclusion. No resolution is stated.
+- Conclusion describes FastAPI backend, while architecture table/overview describes Flask backend.
+D. NOT SPECIFIED
+Python version, package versions, dependency manifest, CSS framework, JavaScript library, ORM, and detailed runtime configuration.
+
+8. AI / GEMINI REQUIREMENTS
+A. EXPLICITLY SPECIFIED
+- Gemini 1.5 Flash Pro is the named model.
+- Intended functions: budget context understanding, image analysis, structured suggestions, platform-specific recommendations, prompt interpretation, and multimodal text/image input for jewelry.
+- Workflow says set up Google Cloud access/API, configure API keys and usage limits, test text-only and image+text prompts, and refine prompts for budget interpretation and product recommendations.
+- Milestone 2 describes gemini_utils.py as handling prompt orchestration, budget formatting, domain segmentation, and image analysis.
+C. CONFLICTING IN SOURCE
+Prerequisites name “Watsonx Access and Configuration” and IBM Cloud, while project description and workflows specify Gemini. The document does not state Watsonx replaces or participates in Gemini implementation.
+D. NOT SPECIFIED
+Specific Gemini API endpoint, SDK, exact API key storage mechanism, request/response schema, prompt text, quotas, or tested model identifier beyond the text “Gemini 1.5 Flash Pro.”
+
+9. AUTHENTICATION REQUIREMENTS
+A. EXPLICITLY SPECIFIED
+The UI/workflow describes registration, login, logout, credentials, secure credential storage, JWT token issuance, and protected jewelry planner access in the visible code example. Later route descriptions say login initiates a session, register accepts and securely stores credentials, logout terminates session and redirects to login, and /token issues a secure JWT after successful authentication.
+B. EXPLICIT CODE / STRUCTURE
+Visible snippet: `async def jewelry_planner(request: Request, current_user: UserInDB = Depends(get_current_active_user))` and a TemplateResponse for jewelry_planner.html with request and user in context. This is explicitly FastAPI-style code and conflicts with Flask descriptions.
+D. NOT SPECIFIED
+Credential schema, password hashing algorithm, JWT signing algorithm/secret/expiry/refresh behavior, registration validation, exact protected route list beyond the snippet, and user persistence mechanism.
+
+10. SESSION REQUIREMENTS
+A. EXPLICITLY SPECIFIED
+Architecture assigns session control to Flask; workflow also asks for basic session management. Later route descriptions say login starts a session, logout terminates it, /session-info retrieves user ID/login status, and /session-data returns session-specific personalization/recommendation tracking data.
+C. CONFLICTING IN SOURCE
+Session requirements are described in Flask architecture and FastAPI route/milestone sections.
+D. NOT SPECIFIED
+Session storage technology, lifecycle/expiry, cookie behavior, serialization, and data schema.
+
+11. HISTORY REQUIREMENTS
+A. EXPLICITLY SPECIFIED
+Dashboard includes saved queries. Recommendation History displays prior recommendation queries/results for review and reuse. The /history path is described as retrieving a user’s past queries and results.
+D. NOT SPECIFIED
+Persistence mechanism, retention, pagination, history schema, and exact authentication requirements for history.
+
+12. HOME INTERIOR PLANNER
+A. EXPLICITLY SPECIFIED
+Inputs include budget, room types (examples: Living Room, Kitchen, Bedroom), and quantities for items such as lights, ceiling fans, and dining tables. Gemini is described as recommending cost-effective options across IKEA and Amazon, balanced across functionality, style, and price.
+B. EXPLICIT CODE / STRUCTURE
+Path /generate-home is named. A Home Interior Budget Planner page and Home Interior Recommendations Page are described.
+D. NOT SPECIFIED
+Exact form fields, validation rules, recommendation schema, and real vendor data acquisition details.
+
+13. PARTY PLANNER
+A. EXPLICITLY SPECIFIED
+Inputs: total budget, guest count, event type, venue details. AI allocates budget proportionally across catering, decoration, and entertainment. Vendors/platforms named: Swiggy, Zomato, OYO. Event examples: birthday, corporate, wedding.
+B. EXPLICIT CODE / STRUCTURE
+Path /generate-party is named. Activity 2.2 says use an if condition to categorize situation-based products. Party Budget Planner and Party Budget Recommendations pages are described.
+D. NOT SPECIFIED
+Allocation percentages, exact condition branches, vendor data source, and output schema.
+
+14. JEWELRY PLANNER
+A. EXPLICITLY SPECIFIED
+Inputs: budget, occasion, style preferences; optional outfit image; AI uses color coordination and aesthetics and offers options from Amazon and Flipkart.
+B. EXPLICIT CODE / STRUCTURE
+Path /generate-jewelry is named. Jewelry Budget Planner and Recommendations pages are described. Visible partial code shows async jewelry_planner with FastAPI Request, Depends(get_current_active_user), UserInDB, and TemplateResponse("jewelry_planner.html", ...).
+C. CONFLICTING IN SOURCE
+The jewelry snippet is FastAPI-style while the architecture and early backend plan specify Flask.
+D. NOT SPECIFIED
+Image formats, upload limits, encoding, storage, processing pipeline, and retention.
+
+15. EXACT FOLDER STRUCTURE
+B. EXPLICIT CODE / STRUCTURE — EXPLICITLY SHOWN
+Activity 3.2 explicitly shows:
+routes/ — Endpoints
+services/ — Recommendation logic & AI calls
+models/ — Input/output schemas
+The document labels Backend Implementation (app.py), and Milestone 2 names gemini_utils.py. A later milestone is titled Backend – FastAPI Integration (main.py).
+B. EXPLICIT CODE / STRUCTURE — DESCRIBED BUT NOT FULLY SHOWN
+A templates directory is referenced by “Templates Directory Structure:” but no tree follows in the extracted DOCX text. UI is described as HTML, CSS, Jinja2 templates. Static routing is mentioned without a static directory tree.
+D. NOT SPECIFIED
+No complete root tree, exact nesting, or confirmed static/css, static/js, static/images folders. Supporting analysis’s proposed tree and requirements.txt are not confirmed by the primary DOCX.
+C. CONFLICTING IN SOURCE
+Backend entry/module references include app.py and main.py, as well as Flask and FastAPI.
+
+16. EXACT FILE LIST
+B. EXPLICIT CODE / STRUCTURE
+Named in primary DOCX: app.py (milestone title), gemini_utils.py (AI utility file), main.py (FastAPI milestone title), jewelry_planner.html (visible snippet). Also references routes/, services/, models/, and a templates directory, but these are directories, not individual file names.
+D. NOT SPECIFIED
+The DOCX does not provide a complete exact file list or name the other 11 HTML files. Do not copy proposed filenames from supporting analysis as confirmed source requirements.
+C. CONFLICTING IN SOURCE
+app.py/Flask vs main.py/FastAPI implementation references are not reconciled.
+
+17. RESPONSIBILITY OF EACH FILE
+B. EXPLICIT CODE / STRUCTURE
+- app.py: backend implementation milestone title; exact responsibilities beyond the described backend routes are not fully enumerated.
+- gemini_utils.py: handles prompt orchestration, budget formatting, domain segmentation, and image analysis; recommendation logic and Gemini API communication are described generally.
+- main.py: FastAPI integration milestone title; detailed module contents are not supplied.
+- jewelry_planner.html: template rendered by the visible jewelry_planner snippet.
+- routes/: endpoints; services/: recommendation logic and AI calls; models/: input/output schemas.
+D. NOT SPECIFIED
+Responsibilities of other individual files, and whether app.py or main.py is the final entry point.
+
+18. FRONTEND REQUIREMENTS
+A. EXPLICITLY SPECIFIED
+Interactive HTML/CSS + JavaScript interface; later described as HTML, CSS, and Jinja2 templates. Responsive planner forms, dynamic recommendation result display and formatting using JavaScript, card-like results with product suggestions, item details, and prices. Planner inputs and optional jewelry image are described.
+D. NOT SPECIFIED
+Exact visual design, CSS framework, breakpoints, browser support, and exact data fields for cards.
+
+19. BACKEND REQUIREMENTS
+A. EXPLICITLY SPECIFIED
+Backend handles planner endpoints, Gemini prompts/API communication, planning logic, CORS headers, basic sessions, input/output models, and mock API calls or simulated scraping (Activity 3.4). Fallback/default recommendations when AI results are insufficient and validation for edge cases are requested in testing/optimization.
+C. CONFLICTING IN SOURCE
+Backend is alternatively Flask and FastAPI; both are explicit in different sections. The real-world “linking websites ... to get products” language sits alongside mock API calls/simulated scraping.
+D. NOT SPECIFIED
+Detailed API integration technique, error format/status codes, validation rules, logging, retry behavior, and deployment server configuration apart from the uvicorn mention.
+
+20. THIRD-PARTY PLATFORM REFERENCES
+A. EXPLICITLY SPECIFIED
+Amazon, Flipkart, IKEA, Swiggy, Zomato, and OYO are named in the project description/scenarios. “and more” also appears. Activity 3.4 says mock API calls or simulated scraping from Amazon, IKEA, Zomato, etc. Activity 2.2 says “linking the websites like amazon,flipkar,ikea ect… to get the products.”
+C. CONFLICTING IN SOURCE
+The document includes both linking websites to get products and mock API calls/simulated scraping; it does not clarify which method to implement.
+D. NOT SPECIFIED
+API keys, endpoints, auth, schemas, terms, rate limits, actual integration code, scraping details, or reliable product data feeds. Do not implement an assumed platform API.
+
+21. IMAGE UPLOAD REQUIREMENTS
+A. EXPLICITLY SPECIFIED
+Jewelry planner accepts an optional outfit image; text and image prompts should be tested; image use is for color coordination/aesthetics.
+D. NOT SPECIFIED
+Allowed file types, size limits, transport encoding, storage, image processing, privacy/retention, and cleanup.
+
+22. TESTING REQUIREMENTS
+A. EXPLICITLY SPECIFIED
+- Test real-world use cases across all three planners.
+- Evaluate Gemini response quality, budget adherence, and platform accuracy.
+- Optimize prompts and add validations for input edge cases.
+- Add fallback/default recommendations if AI returns insufficient results.
+- Scenarios include home decor, party packages, and jewelry matched to outfit/occasion/image.
+D. NOT SPECIFIED
+Test framework, test files, specific acceptance criteria, and automation commands.
+
+23. DEPLOYMENT REQUIREMENTS
+A. EXPLICITLY SPECIFIED
+Prerequisites mention IBM Cloud account and Watsonx access/configuration; Google Cloud access is mentioned for Gemini. Later text says FastAPI __main__ starts server using uvicorn.
+C. CONFLICTING IN SOURCE
+IBM Cloud/Watsonx prerequisite conflicts with Gemini-centric project workflow; Flask and FastAPI deployment descriptions conflict.
+D. NOT SPECIFIED
+Deployment target/configuration, Docker/Procfile, environment-specific settings, dependency versions, scaling, and production server configuration.
+
+24. ACTUAL CODE / IMPLEMENTATION DETAILS PRESENT IN PDF
+The source document available here is DOCX, not PDF. Its 53 inline images may contain screenshots, but screenshot contents are not asserted as verified code in this specification.
+
+Identifiable textual code example:
+- File/module: jewelry_planner.html is the rendered template; Python module not specified.
+- Function: jewelry_planner.
+- Route: No route decorator/path shown in the snippet; /generate-jewelry is separately named in workflow.
+- Purpose: Return/render the Jewelry Planner page with request and user context.
+- Technology/API: async Python syntax, FastAPI Request, Depends(get_current_active_user), UserInDB, templates.TemplateResponse.
+- Completeness: SOURCE CODE INCOMPLETE. The code excerpt begins with a function signature/docstring and return statement; no imports, router/app setup, decorator, dependency definitions, or surrounding definitions are supplied in the textual excerpt.
+
+Other implementation details are descriptive workflow statements, not complete code examples. No verified FastAPI initialization/import block, Gemini API initialization/test code, image+text Gemini prompt code, CORS configuration code, static routing code, or startup function code is visible in extracted text. Uvicorn is mentioned as the server started by __main__, but no code is provided. Do not infer implementations from these mentions.
+
+25. CONFLICTS THAT MUST NOT BE AUTO-RESOLVED
+C. CONFLICTING IN SOURCE
+1. Flask vs FastAPI: Flask is specified in Architecture Overview and early workflow; FastAPI in prerequisites and later milestones/conclusion.
+2. Watsonx vs Gemini: Watsonx/IBM Cloud appear in prerequisites; Gemini 1.5 Flash Pro drives project details and workflows.
+3. Prerequisite list inconsistency: IBM Cloud, Watsonx, Python Basics, and FastAPI are listed together without explaining the differing platform/framework references.
+4. Third-party data approach: linking websites to get products vs mock API calls/simulated scraping.
+5. Backend file/entry point: app.py vs main.py; no resolution.
+
+D. NOT SPECIFIED (must remain unresolved)
+6. Database technology/schema/ORM/migrations/connection.
+7. Session storage mechanism and lifecycle.
+8. Image storage/processing/limits/retention.
+9. Recommendation response schema.
+10. Password hashing and JWT security details.
+11. CORS origins/methods/headers/credentials.
+12. Deployment configuration.
+13. Dependency versions and dependency manifest.
+14. Exact HTML filenames (except jewelry_planner.html in visible snippet), full folder tree, and static asset file list.
+15. Third-party API credentials, endpoints, auth, and schemas.
+
+26. INFORMATION NOT SPECIFIED BY THE SOURCE
+D. NOT SPECIFIED
+- Database technology, schema, tables, ORM, migrations, and connection configuration.
+- Session store, TTL/lifecycle, and serialization.
+- Image formats, limits, storage, processing, and retention.
+- Recommendation response field names and schema.
+- Password hashing, JWT algorithm/secret/expiry/refresh handling, and user model details.
+- CORS configuration specifics.
+- Dependency list/versions, Python version, requirements.txt.
+- Deployment configuration beyond the stated platform prerequisites and uvicorn mention.
+- Third-party platform API keys, endpoints, authentication, schemas, and implementation code.
+- Exact route HTTP methods, response schemas, and detailed error handling.
+- Exact filenames for the 12 page descriptions beyond jewelry_planner.html snippet.
+- Exact complete folder tree and static asset filenames.
+- Specific testing framework and automated test suite.
+
+FINAL IMPLEMENTATION STATUS
+
+IMPLEMENTABLE DIRECTLY FROM SOURCE:
+- The project identity, problem, solution, three planner concepts, documented input types, named platforms, UI page purposes, broad frontend/backend responsibilities, and testing/optimization activities.
+- Named route paths can be preserved as listed in section 6, without assigning undocumented HTTP methods.
+
+EXPLICIT CODE/STRUCTURE AVAILABLE:
+- routes/, services/, and models/ directory responsibilities.
+- app.py, gemini_utils.py, main.py, and jewelry_planner.html are named, with the conflicts/limits recorded above.
+- One partial FastAPI-style jewelry_planner function snippet; marked SOURCE CODE INCOMPLETE.
+
+REQUIRES USER DECISION:
+- Flask or FastAPI; Watsonx or Gemini/prerequisite treatment; app.py or main.py as backend entry point; real platform integration or mock/simulated data approach.
+- Any implementation choice needed for the unspecified storage, security, image handling, response schema, CORS, dependencies, or deployment details.
+
+NOT SPECIFIED:
+- Database and session storage details; image handling details; response schemas; security specifics; exact route methods; detailed API integrations; dependency versions; complete file/folder tree; static asset files; deployment configuration.
+
+SOURCE CONFLICTS:
+- Flask vs FastAPI; Watsonx/IBM Cloud prerequisites vs Gemini workflow; inconsistent prerequisite list; real website linking vs mock/simulated integration; app.py vs main.py.
+
+DO NOT AUTO-RESOLVE:
+- Keep every C and D item classified as such until the user supplies a decision or the primary source is clarified. Do not treat unsupported details in supporting TXT files as requirements from the primary source.

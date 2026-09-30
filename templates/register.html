@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Create account | PocketSmart</title><link rel="stylesheet" href="/static/styles.css"></head>
+<body><main class="auth"><a class="brand" href="/">PocketSmart</a><h1>Create Your Account</h1>
+  <form id="register">
+    <label>Username<input name="username" autocomplete="username" required></label>
+    <label>Email<input name="email" type="email" autocomplete="email" required></label>
+    <label>Full name<input name="full_name" autocomplete="name"></label>
+    <label>Password<span class="password-control"><input id="register-password" name="password" type="password" autocomplete="new-password" required><button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false" data-password-target="register-password">👁</button></span></label>
+    <label>Confirm Password<span class="password-control"><input id="confirm-password" name="confirm_password" type="password" autocomplete="new-password" required><button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false" data-password-target="confirm-password">👁</button></span></label>
+    <button>Create Account</button><p id="message" role="status"></p>
+  </form>
+  <p>Already have an account? <a href="/login">Sign in</a></p>
+</main>
+<script>
+document.querySelectorAll('[data-password-target]').forEach(button=>button.addEventListener('click',()=>{const field=document.getElementById(button.dataset.passwordTarget),visible=field.type==='password';field.type=visible?'text':'password';button.setAttribute('aria-label',visible?'Hide password':'Show password');button.setAttribute('aria-pressed',String(visible));}));
+document.querySelector('#register').addEventListener('submit',async e=>{e.preventDefault();let values=Object.fromEntries(new FormData(e.target));if(values.password!==values.confirm_password){document.querySelector('#message').textContent='Passwords do not match.';return}delete values.confirm_password;let response=await fetch('/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(values)}),data=await response.json();document.querySelector('#message').textContent=response.ok?'Account created. Sign in to continue.':data.detail||'Registration failed';});
+</script></body></html>

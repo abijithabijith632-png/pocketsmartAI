@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sign in | PocketSmart</title><link rel="stylesheet" href="/static/styles.css"></head>
+<body><main class="auth"><a class="brand" href="/">PocketSmart</a><h1>Welcome Back</h1>
+  <form action="/login" method="post">
+    <label>Username<input name="username" autocomplete="username" required></label>
+    <label>Password<span class="password-control"><input id="login-password" name="password" type="password" autocomplete="current-password" required><button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false" data-password-target="login-password">👁</button></span></label>
+    <button>Sign in</button>
+  </form>
+  <p>Don't have an account? <a href="/register">Create Account</a></p>
+</main>
+<script>
+document.querySelectorAll('[data-password-target]').forEach(button=>button.addEventListener('click',()=>{const field=document.getElementById(button.dataset.passwordTarget),visible=field.type==='password';field.type=visible?'text':'password';button.setAttribute('aria-label',visible?'Hide password':'Show password');button.setAttribute('aria-pressed',String(visible));}));
+</script></body></html>

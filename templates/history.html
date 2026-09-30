@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Recommendation History</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header>
+    <a class="brand" href="/dashboard">PocketSmart</a>
+    <nav><a href="/home-planner">Home Planner</a><a href="/party-planner">Party Planner</a><a href="/jewelry-planner">Jewelry Planner</a></nav>
+  </header>
+  <main>
+    <h1>Your Recommendation History</h1>
+    <p>Open a saved search to review or change its inputs before generating again.</p>
+    <div class="history-grid">
+      {% for item in history %}
+      <article class="history-card">
+        <h2>{{ item.type|title }} Budget</h2>
+        <p class="history-budget">₹{{ item.input.total_budget|default('') }}</p>
+        {% if item.type == 'home' %}
+          <p>{{ item.input.num_lights|default(0) }} Lights · {{ item.input.num_fans|default(0) }} Fans · {{ item.input.num_furniture|default(0) }} Furniture · {{ item.input.num_dining_tables|default(0) }} Dining Tables</p>
+          <p class="history-description">Rooms: {% set rooms = [] %}{% if item.input.has_living_room %}{% set _ = rooms.append('Living Room') %}{% endif %}{% if item.input.has_kitchen %}{% set _ = rooms.append('Kitchen') %}{% endif %}{% if item.input.has_bedroom %}{% set _ = rooms.append('Bedroom') %}{% endif %}{{ rooms|join(', ') if rooms else 'None specified' }}</p>
+          {% set reuse_url = '/home-planner?reuse=' ~ item.id %}
+        {% elif item.type == 'party' %}
+          <p>{{ item.input.party_type|default('Party') }} · {{ item.input.num_guests|default('') }} Guests{% if item.input.venue_type %} · {{ item.input.venue_type }}{% endif %}</p>
+          {% if item.input.additional_requirements %}<p class="history-description">{{ item.input.additional_requirements }}</p>{% endif %}
+          {% set reuse_url = '/party-planner?reuse=' ~ item.id %}
+        {% else %}
+          <p>{{ item.input.occasion|default('Jewelry search') }}</p>
+          {% if item.input.preferences %}<p class="history-description">{{ item.input.preferences }}</p>{% endif %}
+          {% if item.input.image %}<p class="history-image">Previous outfit image: {{ item.input.image }}. You can upload it again on the planner.</p>{% endif %}
+          {% set reuse_url = '/jewelry-planner?reuse=' ~ item.id %}
+        {% endif %}
+        <p class="history-date">{{ item.timestamp }}</p>
+        <a class="button" href="{{ reuse_url }}">Reuse Search</a>
+      </article>
+      {% else %}
+        <p>No saved recommendation plans yet.</p>
+      {% endfor %}
+    </div>
+  </main>
+</body>
+</html>
